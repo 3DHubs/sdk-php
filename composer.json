@@ -1,0 +1,13 @@
+{
+    "name": "hubs3d/hubs3d_api_example",
+    "authors": [
+        {
+            "name": "Bram Rongen",
+            "email": "bram.rongen@3dhubs.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "guzzlehttp/oauth-subscriber": "0.1.0"
+    }
+}
