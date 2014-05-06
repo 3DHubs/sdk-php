@@ -34,7 +34,7 @@ $files = array(
 
 foreach($files as $filename => $quantity){
   $data = [
-    'file' => urlencode(base64_encode(file_get_contents(dirname(__FILE__) . '/' . $filename))),
+    'file' => base64_encode(file_get_contents(dirname(__FILE__) . '/' . $filename)),
     'fileName' => $filename,
   ];
 
