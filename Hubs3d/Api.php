@@ -57,7 +57,7 @@ class Api
      */
     public function init()
     {
-        // leaving it on oauth1 for now.. can allow oauth2 later ?
+        //initalize the client
         $this->client = new Client([
             'base_url' => $this->host . '/api/v1/',
             'defaults' => ['auth' => 'oauth', 'headers' => ['Content-type' => 'application/json'] ],
@@ -69,9 +69,7 @@ class Api
         ]);
 
         $this->client->getEmitter()->attach($this->oauth);
-
     }
-
 
     /**
      * @param $model
