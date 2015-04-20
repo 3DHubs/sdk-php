@@ -6,7 +6,6 @@
  * Time: 17:24
  */
 
-
 namespace Hubs3d;
 
 use GuzzleHttp\Client;
@@ -84,12 +83,18 @@ class Api
             'fileName' => $model->fileName,
         ];
 
-        $res = $this->_post('model', $data);
+        $obj = new \stdClass();
+        try{
+            $res = $this->_post('model', $data);
+        } catch(\Exception $e){
+            $obj->error = true;
+            $obj->errorMessage = $e->getMessage();
+            return json_encode($obj);
+        }
 
         // Get the result.
         $result = $res->json();
 
-        $obj = new \stdClass();
         if($result['result'] == 'success'){
             $obj->modelId= $result['modelId'];
             $obj->quantity = 1;
@@ -99,6 +104,7 @@ class Api
         }
 
         return json_encode($obj);
+
     }
 
 

@@ -1,7 +1,9 @@
 <?php
 
-define('CONSUMER_KEY', 'fill this');
-define('CONSUMER_SECRET', 'fill this');
+$settings = array(
+    'consumer_key' => 'YOUR_CONSUMER_KEY_HERE',
+    'consumer_secret' => 'YOUR_CONSUMER_SECRET_HERE'
+);
 
 define('API_HOST', 'http://test.3dhubs.com');
 
@@ -16,8 +18,8 @@ $client = new Client([
     ]);
 
 $oauth = new Oauth1([
-    'consumer_key'    => CONSUMER_KEY,
-    'consumer_secret' => CONSUMER_SECRET,
+    'consumer_key'    => $settings['consumer_key'],
+    'consumer_secret' => $settings['consumer_secret'],
   ]);
 
 $client->getEmitter()->attach($oauth);
