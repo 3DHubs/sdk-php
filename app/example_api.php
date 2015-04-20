@@ -39,5 +39,11 @@ if(isset($modelObj->error) && isset($modelObj->errorMessage)){
 ////////////////////////////////////////////////////////////////////////////////
 $result = $hubs3d->createCart($model);
 
+$resultObj = json_decode($result);
+if(isset($resultObj->error) && isset($resultObj->errorMessage)){
+    echo $resultObj->errorMessage;
+    die();
+}
+
 echo "All done. Visit the url to claim the cart! ".PHP_EOL;
 echo $result['url'];

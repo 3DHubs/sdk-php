@@ -127,7 +127,15 @@ class Api
             $data['items[' . $models->modelId . '][modelId]'] =  $models->modelId;
             $data['items[' .  $models->modelId . '][quantity]'] =  $models->quantity;
         }
-        $res = $this->_post('cart', $data);
+
+        try{
+            $res = $this->_post('cart', $data);
+        } catch(\Exception $e){
+            $obj = new \stdClass();
+            $obj->error = true;
+            $obj->errorMessage = $e->getMessage();
+            return json_encode($obj);
+        }
 
         // All done, output result.
         return $res->json();
