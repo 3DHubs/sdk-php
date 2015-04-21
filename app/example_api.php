@@ -11,14 +11,6 @@ $settings = array(
 );
 
 
-$element = new stdClass();
-$element->file = dirname(__FILE__) . '/' . 'marvin.stl';
-$element->fileName = 'marvin';
-
-//this part is useless but its a fake serverside program to recreate what front end could do
-$file = json_encode($element);
-
-
 /** ACTUAL API **/
 use \Hubs3d\Api;
 $hubs3d = new Api($settings);
@@ -26,24 +18,17 @@ $hubs3d = new Api($settings);
 ////////////////////////////////////////////////////////////////////////////////
 // Send the models to the API.
 ////////////////////////////////////////////////////////////////////////////////
-$model = $hubs3d->createModel($file);
-$modelObj = json_decode($model);
-
-if(isset($modelObj->error) && isset($modelObj->errorMessage)){
-    echo $modelObj->errorMessage;
-    die();
-}
+$model = $hubs3d->createModel(dirname(__FILE__) . '/' . 'marvin.stl');
+var_dump($model);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Create the cart with the uploaded models.
 ////////////////////////////////////////////////////////////////////////////////
-$result = $hubs3d->createCart($model);
-
-$resultObj = json_decode($result);
-if(isset($resultObj->error) && isset($resultObj->errorMessage)){
-    echo $resultObj->errorMessage;
-    die();
-}
-
-echo "All done. Visit the url to claim the cart! ".PHP_EOL;
-echo $result['url'];
+$items = array(
+    'items' => array(
+        'modelId' => $model['modelId'],
+        'quantity' => 3
+    )
+);
+$result = $hubs3d->createCart($items);
+var_dump($result);

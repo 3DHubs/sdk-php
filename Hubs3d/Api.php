@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Xenia
- * Date: 24/03/15
- * Time: 17:24
+ * Created by 3D Hubs
  */
 
 namespace Hubs3d;
@@ -71,72 +68,38 @@ class Api
     }
 
     /**
-     * @param $model
-     * @return string
-     */
-    public function createModel($model)
+     * @param $file_path
+     * @param null $filename
+     * @throws \Exception
+     * @return array
+]     */
+    public function createModel($file_path, $filename = null)
     {
-        $model = json_decode($model);
+        if(!$filename){
+            $filename = basename($file_path);
+        }
 
         $data = [
-            'file' => base64_encode(file_get_contents($model->file)),
-            'fileName' => $model->fileName,
+            'file' => base64_encode(file_get_contents($file_path)),
+            'fileName' => $filename,
         ];
 
-        $obj = new \stdClass();
-        try{
-            $res = $this->_post('model', $data);
-        } catch(\Exception $e){
-            $obj->error = true;
-            $obj->errorMessage = $e->getMessage();
-            return json_encode($obj);
-        }
+        //$res = $this->_post('model', $data);
+        $res = $this->_post('model', $data);
 
-        // Get the result.
-        $result = $res->json();
-
-        if($result['result'] == 'success'){
-            $obj->modelId= $result['modelId'];
-            $obj->quantity = 1;
-        } else {
-            //do error handling
-            $obj->error = true;
-        }
-
-        return json_encode($obj);
-
+        // Return the result.
+        return $res->json();
     }
 
 
     /**
-     * @param $models
-     * @return mixed
+     * @param $items - array of modelId and quantity object
+     * @throws \Exception
+     * @return array
      */
-    public function createCart($models)
+    public function createCart($items)
     {
-        $models = json_decode($models);
-
-        if(is_array($models)){
-            $data = array();
-            foreach($models as $index => $modelObj){
-                $data['items[' . $modelObj->modelId . '][modelId]'] =  $modelObj->modelId;
-                $data['items[' .  $modelObj->modelId . '][quantity]'] =  $modelObj->quantity;
-            }
-        } else {
-            $data = array();
-            $data['items[' . $models->modelId . '][modelId]'] =  $models->modelId;
-            $data['items[' .  $models->modelId . '][quantity]'] =  $models->quantity;
-        }
-
-        try{
-            $res = $this->_post('cart', $data);
-        } catch(\Exception $e){
-            $obj = new \stdClass();
-            $obj->error = true;
-            $obj->errorMessage = $e->getMessage();
-            return json_encode($obj);
-        }
-
+        $res = $this->_post('cart', $items);
         // All done, output result.
         return $res->json();
     }
@@ -144,22 +107,29 @@ class Api
     /**
      * @param $url
      * @param $data
-     * @param $options
+     * @param bool $isjson
      * @return \GuzzleHttp\Message\ResponseInterface
      */
-    private function _post($url, $data, $options= [])
+    private function _post($url, $data, $isjson = true)
     {
-        $request = $this->client->createRequest('POST', $url, $options);
-        $postBody = $request->getBody();
+        if($isjson){
+            return $this->client->post($url, array(
+                'headers' => array('Content-type' => 'application/json'),
+                'body' => $data
+            ));
+        } else {
+            //x-www-formurlencoded this is deprecated
+            $request = $this->client->createRequest('POST', $url);
+            $postBody = $request->getBody();
 
-        if(is_array($data)){
-            foreach($data as $name => $value){
-                $postBody->setField($name, $value);
+            if(is_array($data)){
+                foreach($data as $name => $value){
+                    $postBody->setField($name, $value);
+                }
             }
+
+            //Make the request to add a model.
+            return $this->client->send($request);
         }
-
-        //Make the request to add a model.
-        return $this->client->send($request);
     }
-
 }
