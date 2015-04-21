@@ -4,12 +4,10 @@
 require( dirname(__FILE__) .'/../vendor/autoload.php');
 include_once( dirname(__FILE__) .'/../Hubs3d/Api.php');
 
-
 $settings = array(
     'consumer_key' => 'YOUR_CONSUMER_KEY_HERE',
     'consumer_secret' => 'YOUR_CONSUMER_SECRET_HERE'
 );
-
 
 /** ACTUAL API **/
 use \Hubs3d\Api;
