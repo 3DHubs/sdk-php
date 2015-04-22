@@ -4,12 +4,14 @@
 require( dirname(__FILE__) .'/../vendor/autoload.php');
 include_once( dirname(__FILE__) .'/../Hubs3d/Api.php');
 
+//set consumer at: https://www.3dhubs.com/my-dashboard/api/oauth/consumer/add
 $settings = array(
     'consumer_key' => 'YOUR_CONSUMER_KEY_HERE',
     'consumer_secret' => 'YOUR_CONSUMER_SECRET_HERE'
 );
 
 /** ACTUAL API **/
+//initialise insanceof API that uses GuzzleHttp
 use \Hubs3d\Api;
 $hubs3d = new Api($settings);
 

@@ -72,7 +72,7 @@ class Api
      * @param null $filename
      * @throws \Exception
      * @return array
-]     */
+     */
     public function createModel($file_path, $filename = null)
     {
         if(!$filename){
