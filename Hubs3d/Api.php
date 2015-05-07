@@ -13,7 +13,7 @@ class Api
     /**
      * @var string
      */
-    private $host = 'http://3dhubs.localhost';
+    private $host = 'http://3dhubs.com/api/v1/';
     /**
      * @var string
      */
