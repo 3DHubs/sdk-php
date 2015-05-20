@@ -13,8 +13,7 @@ class Api
     /**
      * @var string
      */
-    //LIVE URL https://3dhubs.com/api/v1/
-    private $host = 'https://staging.3dhubs.com/api/v1/';
+    private $host = 'https://3dhubs.com/api/v1/';
     /**
      * @var string
      */
