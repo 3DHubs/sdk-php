@@ -5,7 +5,7 @@ $settings = array(
     'consumer_secret' => 'YOUR_CONSUMER_SECRET_HERE'
 );
 
-define('API_HOST', 'http://test.3dhubs.com');
+define('API_HOST', 'https://www.3dhubs.com');
 
 require( dirname(__FILE__) .'/../vendor/autoload.php');
 
