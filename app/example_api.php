@@ -26,9 +26,13 @@ var_dump($model);
 ////////////////////////////////////////////////////////////////////////////////
 $items = array(
     'items' => array(
+      array(
         'modelId' => $model['modelId'],
         'quantity' => 3
-    )
-);
+      ),
+    ),
+  );
+
 $result = $hubs3d->createCart($items);
 var_dump($result);
+
