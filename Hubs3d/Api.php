@@ -13,7 +13,7 @@ class Api
     /**
      * @var string
      */
-    private $host = 'https://3dhubs.com/api/v1/';
+    private $host = 'https://www.3dhubs.com';
     /**
      * @var string
      */
@@ -44,6 +44,10 @@ class Api
 
         $this->consumer_key = $settings['consumer_key'];
         $this->consumer_secret = $settings['consumer_secret'];
+
+        if (isset($settings['host'])){
+            $this->host = $settings['host'];
+        }
 
         $this->init();
     }
