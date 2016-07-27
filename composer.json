@@ -8,6 +8,6 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "guzzlehttp/oauth-subscriber": "0.1.*"
+        "guzzlehttp/oauth-subscriber": "0.3.*"
     }
 }
