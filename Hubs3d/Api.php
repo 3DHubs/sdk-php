@@ -6,6 +6,7 @@
 namespace Hubs3d;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 class Api
@@ -58,17 +59,23 @@ class Api
     public function init()
     {
         //initalize the client
-        $this->client = new Client([
-            'base_url' => $this->host . '/api/v1/',
-            'defaults' => ['auth' => 'oauth', 'headers' => ['Content-type' => 'application/json'] ],
-        ]);
 
-        $this->oauth = new Oauth1([
+        $stack = HandlerStack::create();
+
+        $middleware = new Oauth1([
             'consumer_key'    => $this->consumer_key,
             'consumer_secret' => $this->consumer_secret,
+            'token'           => null,
+            'token_secret'    => null,
         ]);
+        $stack->push($middleware);
 
-        $this->client->getEmitter()->attach($this->oauth);
+        $this->client = new Client([
+            'base_uri' => $this->host . '/api/v1/',
+            'handler' => $stack,
+            'auth' => 'oauth',
+            'headers' => ['Content-type' => 'application/json']
+        ]);
     }
 
     /**
@@ -92,7 +99,7 @@ class Api
         $res = $this->_post('model', $data);
 
         // Return the result.
-        return $res->json();
+        return json_decode((string)$res->getBody(), true);
     }
 
 
@@ -105,7 +112,7 @@ class Api
     {
         $res = $this->_post('cart', $items);
         // All done, output result.
-        return $res->json();
+        return json_decode((string)$res->getBody(), true);
     }
 
     /**
@@ -119,7 +126,7 @@ class Api
         if($isjson){
             return $this->client->post($url, array(
                 'headers' => array('Content-type' => 'application/json'),
-                'body' => $data
+                'json' => $data
             ));
         } else {
             //x-www-formurlencoded this is deprecated
