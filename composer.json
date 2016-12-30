@@ -6,8 +6,12 @@
             "email": "bram.rongen@3dhubs.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "guzzlehttp/oauth-subscriber": "0.3.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hubs3d\\": "src"
+        }
     }
 }

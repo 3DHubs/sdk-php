@@ -1,24 +1,22 @@
 <?php
 
+require dirname(__FILE__) . '/vendor/autoload.php';
 
-require( dirname(__FILE__) .'/../vendor/autoload.php');
-include_once( dirname(__FILE__) .'/../Hubs3d/Api.php');
+use Hubs3d\Api;
 
-//set consumer at: https://www.3dhubs.com/my-dashboard/api/oauth/consumer/add
+// Create consumer at: https://www.3dhubs.com/my-dashboard/api/oauth/consumer/add
 $settings = array(
-    'consumer_key' => 'YOUR_CONSUMER_KEY_HERE',
-    'consumer_secret' => 'YOUR_CONSUMER_SECRET_HERE'
+    'consumer_key' => 'eakkdufQ4Kjrab9bynPAFshizGWrMHMo',
+    'consumer_secret' => 'yvdVj4rR6TCW4gjmz72kdo57t7SiYPbY',
+    'host' => 'http://3dhubs.dev',
 );
 
-/** ACTUAL API **/
-//initialise insanceof API that uses GuzzleHttp
-use \Hubs3d\Api;
 $hubs3d = new Api($settings);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Send the models to the API.
 ////////////////////////////////////////////////////////////////////////////////
-$model = $hubs3d->createModel(dirname(__FILE__) . '/' . 'marvin.stl');
+$model = $hubs3d->createModel(dirname(__FILE__) . '/marvin.stl');
 var_dump($model);
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -26,10 +24,10 @@ var_dump($model);
 ////////////////////////////////////////////////////////////////////////////////
 $items = array(
     'items' => array(
-      array(
-        'modelId' => $model['modelId'],
-        'quantity' => 3
-      ),
+        array(
+            'modelId' => $model['modelId'],
+            'quantity' => 3,
+        ),
     ),
   );
 
