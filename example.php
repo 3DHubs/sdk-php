@@ -6,9 +6,8 @@ use Hubs3d\Api;
 
 // Create consumer at: https://www.3dhubs.com/my-dashboard/api/oauth/consumer/add
 $settings = array(
-    'consumer_key' => 'eakkdufQ4Kjrab9bynPAFshizGWrMHMo',
-    'consumer_secret' => 'yvdVj4rR6TCW4gjmz72kdo57t7SiYPbY',
-    'host' => 'http://3dhubs.dev',
+    'consumer_key' => '',
+    'consumer_secret' => '',
 );
 
 $hubs3d = new Api($settings);
